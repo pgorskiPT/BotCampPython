@@ -98,25 +98,23 @@ print(df.to_string())  # wypisyje wiecej niz 60 wierszy
 # 4           Gliwice
 print("=" * 30)
 
-
 import time
-df=pd.DataFrame({"Wiek":[18,25,30,15,40]})
+
+df = pd.DataFrame({"Wiek": [18, 25, 30, 15, 40]})
 print(df)
 print("=" * 30)
-df["Kategoria"]="Dorosły"
+df["Kategoria"] = "Dorosły"
 print(df)
 start_time = time.time()  # start pomiaru czasu
-df.loc[df['Wiek']<18,"Kategoria"]="Niepełnolietni"
+df.loc[df['Wiek'] < 18, "Kategoria"] = "Niepełnolietni"
 end_time = time.time()  # koniec pomiaru czasu
 print("=" * 30)
 print(df)
 print("=" * 30)
 print(f"Czas wykonania: {end_time - start_time:.6f} sekundy")
 
-
-
 df = pd.DataFrame({'Miasto': ['Warszawa', 'Kraków', "Łódź", "Warszawa", "Gliwice"]})
-df['Miasto']=df['Miasto'].replace(r"^Ł.*","Łódź Przemysłowa", regex=True)
+df['Miasto'] = df['Miasto'].replace(r"^Ł.*", "Łódź Przemysłowa", regex=True)
 # df['Miasto']=df['Miasto'].replace("Łódź","Łódź Przemysłowa", regex=True)
 print(df.to_string())
 
@@ -128,3 +126,57 @@ print(df.to_string())
 # Właśnie dlatego pandas zastępuje cały tekst, a nie tylko sam znak Ł.
 # Tak działają wyrażenia regularne w pandas replace z opcją regex=True.
 # To pozwala precyzyjnie kontrolować, które fragmenty tekstu są zamieniane.
+
+print("=" * 30)
+df = pd.DataFrame({"Wiek": [18, 25, 30, 15, 40, 65]})
+
+df['Kategoria'] = df['Wiek'].apply(lambda x: "Senior" if x > 60 else "Dorosły")
+print(df)
+#    Wiek Kategoria
+# 0    18   Dorosły
+# 1    25   Dorosły
+# 2    30   Dorosły
+# 3    15   Dorosły
+# 4    40   Dorosły
+# 5    65    Senior
+print("=" * 30)
+
+
+def zmienna(x):
+    if x > 60:
+        return "Senior"
+    else:
+        return "Dorosły"
+
+
+df['Kategoria'] = df['Wiek'].apply(zmienna)
+print(df)
+#    Wiek Kategoria
+# 0    18   Dorosły
+# 1    25   Dorosły
+# 2    30   Dorosły
+# 3    15   Dorosły
+# 4    40   Dorosły
+# 5    65    Senior
+print("=" * 30)
+
+df = pd.DataFrame({'Miasto': ['Warszawa123', 'Kraków456', "Łódź", "Warszawa789", "Gli789wice"]})
+print(df)
+#         Miasto
+# 0  Warszawa123
+# 1    Kraków456
+# 2         Łódź
+# 3  Warszawa789
+# 4   Gli789wice
+print("=" * 30)
+df['Miasto'] = df['Miasto'].replace(r"\d+", "", regex=True)
+print(df)
+#      Miasto
+# 0  Warszawa
+# 1    Kraków
+# 2      Łódź
+# 3  Warszawa
+# 4   Gliwice
+print("=" * 30)
+
+
