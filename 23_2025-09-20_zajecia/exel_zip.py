@@ -62,4 +62,10 @@ import pandas as pd
 
 df=pd.DataFrame(data)
 print(df.head())
+#         0        1         2
+# 0       a        b         c
+# 1
+# 2
+# 3  Region  Produkt  Sprzedaż
+# 4  Północ   Laptop     15000
 df.to_excel('fix2.xlsx',index=False)
