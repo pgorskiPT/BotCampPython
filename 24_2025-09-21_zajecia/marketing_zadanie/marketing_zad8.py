@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from scipy import stats
 
 df = pd.read_csv("marketing_is_hause_ads.csv", sep=",")
 
@@ -49,3 +50,34 @@ print(150 * '=')
 
 print("Control conversion rate:", np.mean(control))
 print("Personalization conversion rate:", np.mean(personalization))
+
+
+print(150 * '=')
+import funkcjon_tools
+print("Lift:",funkcjon_tools.lift(control, personalization))
+
+
+def ab_segmentation(segment):
+    for subsegment in np.unique(df[segment].values):
+        print(subsegment)
+
+    email=df[(df["marketing_channel"]=='Email')&(df[segment]==subsegment)]
+    print(email.head().to_string())
+
+    subscribers=email.groupby(['user_id','variant'])['converted'].max()
+    print(subscribers.head())
+    subscribers=pd.DataFrame(subscribers.unstack(level=1))
+    control=subscribers['control'].dropna()
+
+    personalization=subscribers['personalization'].dropna()
+    print(control.dtype, personalization.dtype)
+
+    print("Lift:", funkcjon_tools.lift(control,personalization))
+    control=control.astype(int)
+    personalization=personalization.astype(int)
+    print("T-satic:",stats.ttest_ind(control, personalization) , "\n\n")
+
+
+print(150 * '=')
+ab_segmentation('language_displayed')
+ab_segmentation("age_group")
