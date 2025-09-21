@@ -41,3 +41,4 @@ print(150*'=')
 # dodanie kolumny channel_code, zmiana nazw marketing_channel na chanel_code
 channel_dict = {"House Ads": 1, "Instagram": 2, "Facebook": 3, "Email": 4, "Push": 5}
 df['channel_code']=df['marketing_channel'].map(channel_dict)
+print(df.head(5).to_string())
