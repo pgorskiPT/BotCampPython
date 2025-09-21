@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from bs4.dammit import chardet_module
 
 # df = pd.read_csv('marketing_r.csv')
 # print(df.head().to_string())
@@ -81,3 +82,13 @@ print(subscribers)
 print(150*'=')
 chanel_retention_rate=(retained/subscribers)*100
 print(chanel_retention_rate)
+
+
+import matplotlib.pyplot as plt
+chanel_retention_rate.plot(kind="bar")
+plt.title("Wskaźnik utrzymania wg kanału")
+plt.xlabel("Kanał", size=14)
+plt.ylabel("Konwersja(%)", size=14)
+plt.xticks(rotation=45)
+
+plt.show()
