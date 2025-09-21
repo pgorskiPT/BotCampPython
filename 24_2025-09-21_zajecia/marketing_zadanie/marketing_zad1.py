@@ -42,3 +42,22 @@ print(150*'=')
 channel_dict = {"House Ads": 1, "Instagram": 2, "Facebook": 3, "Email": 4, "Push": 5}
 df['channel_code']=df['marketing_channel'].map(channel_dict)
 print(df.head(5).to_string())
+
+df['day_name']=df['date_served'].dt.day_name()
+print(df['day_name'].head(3))
+
+
+#unikalni uzytkownicy dziennie
+
+daily_user = df.groupby(['date_served'])['user_id'].nunique()
+print("dziennie:", daily_user)
+
+
+import matplotlib.pyplot as plt
+
+daily_user.plot()
+plt.title("Zasięg dzienny kampanii marketingowej")
+plt.xlabel("Data")
+plt.ylabel("Liczba użytkowników")
+plt.xticks(rotation=60)
+plt.show()
